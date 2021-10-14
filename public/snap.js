@@ -19,3 +19,10 @@ async function  toggleCamera() {
         recording = true;
     }
 }
+
+function snapPhoto() {
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    var video = document.getElementById('player');
+    context.drawImage(video, 0, 0, 640, 480);
+}
