@@ -4,13 +4,14 @@
 <h1>All good</h1>
 <video id="player" width="640" height="480" controls autoplay></video>
 
-<script src="snap.js">
+<script src="snap.js"></script>
+<script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
 
-</script>
 
 <button onClick="toggleCamera()">Start/Stop</button>
 <button onClick="snapPhoto()">Snap Photo</button>
 <canvas id="canvas" width="640" height="480"></canvas>
+<div id="results"></div>
 </body>
 
 </html>
