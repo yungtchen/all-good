@@ -1,20 +1,21 @@
+const player = document.getElementById('player');
+let recording = true;
+const constraints = {
+  video: true,
+};
 
-var video = document.getElementById('video');
+navigator.mediaDevices.getUserMedia(constraints)
+  .then((stream) => {
+    player.srcObject = stream;
+  });
 
-// Get access to the camera!
-if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    // Not adding `{ audio: true }` since we only want video now
-    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-        video.src = window.URL.createObjectURL(stream);
-        video.srcObject = stream;
-        video.play();
-    });
+async function  toggleCamera() {
+    if(recording) {
+        player.srcObject.getVideoTracks().forEach(track => track.stop());
+        recording = false;
+    } else {
+        const stream =await  navigator.mediaDevices.getUserMedia(constraints)
+        player.srcObject = stream;
+        recording = true;
+    }
 }
-var canvas = document.getElementById('canvas');
-var context = canvas.getContext('2d');
-var video = document.getElementById('video');
-
-// Trigger photo take
-document.getElementById("snap").addEventListener("click", function() {
-	context.drawImage(video, 0, 0, 640, 480);
-});
