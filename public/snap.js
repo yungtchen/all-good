@@ -1,3 +1,8 @@
+const ALLERGENS = [
+  'peanuts',
+  'treenuts',
+  'bicarbonate'
+]
 const player = document.getElementById('player');
 let recording = true;
 const constraints = {
@@ -27,21 +32,31 @@ async function snapPhoto() {
     context.drawImage(video, 0, 0, 640, 480);
 
     canvas.toBlob((blob) => {
-      /*
-      const recognize = async ({ target: { files }  }) => {
-        const { data: { text } } = await Tesseract.recognize(blob, 'eng', {
-          // corePath: './../node_modules/tesseract.js-core/tesseract-core.wasm.js',
-          logger: m => console.log(m),
-        });
-        console.log(text);
-      }
-      */
       Tesseract.recognize(blob, "eng", {
         logger: (m) => console.log(m),
       }).then(({ data: { text } }) => {
         const results = document.getElementById('results');
         results.innerText = text;
+        const found = checkForAllergens(ALLERGENS, text);
+        const list = document.getElementById('list');
+        found.forEach(listItem => {
+          const li = document.createElement('li');
+          li.innerText = listItem;
+          list.appendChild(li);
+        });
       });
     });
+}
 
+function checkForAllergens(allergens, text) {
+  const noWS = text.split(' ')
+                .join('')
+                .toLowerCase();
+  const found = [];
+  allergens.forEach((word) => {
+    if(noWS.search(word) >-1 ){
+      found.push(word);
+    }
+  });
+  return found;
 }
