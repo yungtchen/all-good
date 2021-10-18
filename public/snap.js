@@ -1,5 +1,8 @@
 const ALLERGENS = [
   'peanuts',
+  'peanut',
+  'almond',
+  'almonds',
   'treenuts',
   'bicarbonate'
 ]
